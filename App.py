@@ -25,7 +25,6 @@ st.sidebar.write("Make sure the link you take comes from the CNN Indonesia page"
 st.sidebar.write("\n\n")
 st.sidebar.caption("Created by Ungga Putra using [Streamlit](https://streamlit.io/)🎈.")
 
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn", tokenizer="facebook/bart-large-cnn")
 def scrap_and_summarize(link):
     # Scrap berita
     cnn_url = link
@@ -46,7 +45,7 @@ def scrap_and_summarize(link):
     
     
     # Ringkaskan berita
-    
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn", tokenizer="facebook/bart-large-cnn")
     news_input = ' '.join(news_text)  # Menggabungkan seluruh teks berita
     summary = summarizer(news_input, max_length=200, min_length=50, length_penalty=2.0, num_beams=4, early_stopping=True)
     
