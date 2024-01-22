@@ -1,11 +1,13 @@
 import streamlit as st
 import subprocess
 
-# Perintah untuk menginstal BeautifulSoup
-install_command = 'pip install beautifulsoup4'
+# Baca isi requirements.txt
+with open('requirements.txt', 'r') as file:
+    requirements = file.read().splitlines()
 
-# Jalankan perintah instalasi menggunakan subprocess
-subprocess.call(install_command, shell=True)
+# Instal pustaka menggunakan pip
+for requirement in requirements:
+    subprocess.call(['pip', 'install', requirement])
 
 import requests
 from bs4 import BeautifulSoup
