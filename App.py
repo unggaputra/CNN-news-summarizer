@@ -1,4 +1,12 @@
 import streamlit as st
+import subprocess
+
+# Perintah untuk menginstal BeautifulSoup
+install_command = 'pip install beautifulsoup4'
+
+# Jalankan perintah instalasi menggunakan subprocess
+subprocess.call(install_command, shell=True)
+
 import requests
 from bs4 import BeautifulSoup
 from transformers import pipeline
