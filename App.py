@@ -5,7 +5,7 @@ from transformers import pipeline
 import re
 import time
 
-# Sidebar
+#Side Bar
 st.sidebar.subheader("About the app")
 st.sidebar.info("Scrape and Summarize CNN News Indonesia with Streamlit")
 st.sidebar.write("\n\n")
@@ -14,6 +14,7 @@ st.sidebar.divider()
 st.sidebar.write("Make sure the link you take comes from the CNN Indonesia page")
 st.sidebar.write("\n\n")
 st.sidebar.caption("Created by Ungga Putra using [Streamlit](https://streamlit.io/)🎈.")
+
 
 def scrap_and_summarize(link):
     # Scrap berita
@@ -33,6 +34,7 @@ def scrap_and_summarize(link):
     for news in news_text:
         st.write(news)
     
+    
     # Ringkaskan berita
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn", tokenizer="facebook/bart-large-cnn")
     news_input = ' '.join(news_text)  # Menggabungkan seluruh teks berita
@@ -43,10 +45,10 @@ def scrap_and_summarize(link):
     st.write(summary[0]['summary_text'])
 
 # Tampilan Streamlit
-st.title("Scrape and Summarize CNN Indonesia News with Streamlit")
+st.title("Scrape and Summarize CNN News with Streamlit")
 
 # Input URL dari pengguna
-url_input = st.text_input("Input CNN news URL:(example: https://www.cnnindonesia.com/olahraga/20241221230246-142-1179859/daftar-4-tim-lolos-semifinal-piala-aff-2024")
+url_input = st.text_input("Input CNN news URL:")
 
 # Ketika tombol "Scrape dan Ringkaskan" ditekan
 if st.button("Scrape and Summarize"):
