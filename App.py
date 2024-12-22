@@ -1,7 +1,6 @@
 import streamlit as st
 import subprocess
 
-pip --version
 # Baca isi requirements.txt
 with open('requirements.txt', 'r') as file:
     requirements = file.read().splitlines()
