@@ -1,21 +1,11 @@
 import streamlit as st
-import subprocess
-
-# Baca isi requirements.txt
-with open('requirements.txt', 'r') as file:
-    requirements = file.read().splitlines()
-
-# Instal pustaka menggunakan pip
-for requirement in requirements:
-    subprocess.call(['pip', 'install', requirement])
-
 import requests
 from bs4 import BeautifulSoup
 from transformers import pipeline
 import re
 import time
 
-#Side Bar
+# Sidebar
 st.sidebar.subheader("About the app")
 st.sidebar.info("Scrape and Summarize CNN News Indonesia with Streamlit")
 st.sidebar.write("\n\n")
@@ -43,7 +33,6 @@ def scrap_and_summarize(link):
     for news in news_text:
         st.write(news)
     
-    
     # Ringkaskan berita
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn", tokenizer="facebook/bart-large-cnn")
     news_input = ' '.join(news_text)  # Menggabungkan seluruh teks berita
@@ -57,7 +46,7 @@ def scrap_and_summarize(link):
 st.title("Scrape and Summarize CNN Indonesia News with Streamlit")
 
 # Input URL dari pengguna
-url_input = st.text_input("Input CNN news URL:(example:https://www.cnnindonesia.com/olahraga/20241221230246-142-1179859/daftar-4-tim-lolos-semifinal-piala-aff-2024")
+url_input = st.text_input("Input CNN news URL:(example: https://www.cnnindonesia.com/olahraga/20241221230246-142-1179859/daftar-4-tim-lolos-semifinal-piala-aff-2024")
 
 # Ketika tombol "Scrape dan Ringkaskan" ditekan
 if st.button("Scrape and Summarize"):
