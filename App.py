@@ -54,7 +54,7 @@ def scrap_and_summarize(link):
     st.write(summary[0]['summary_text'])
 
 # Tampilan Streamlit
-st.title("Scrape and Summarize CNN News with Streamlit")
+st.title("Scrape and Summarize CNN Indonesia News with Streamlit")
 
 # Input URL dari pengguna
 url_input = st.text_input("Input CNN news URL:(example:https://www.cnnindonesia.com/olahraga/20241221230246-142-1179859/daftar-4-tim-lolos-semifinal-piala-aff-2024")
