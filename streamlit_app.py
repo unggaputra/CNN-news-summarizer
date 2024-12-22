@@ -1,9 +1,3 @@
-import subprocess
-import sys
-
-# Upgrade pip jika perlu
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
-
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
