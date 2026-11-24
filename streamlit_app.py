@@ -20,7 +20,7 @@ MODEL_NAME = "cahya/t5-base-indonesian-summarization-cased"
 
 @st.cache_resource
 def load_model():
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_fast=False)
     model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
     return tokenizer, model
 
