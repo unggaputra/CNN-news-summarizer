@@ -3,7 +3,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 import streamlit as st
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 st.set_page_config(page_title="CNN News Summarizer", layout="centered")
 
@@ -15,14 +15,33 @@ st.sidebar.divider()
 st.sidebar.write("Make sure the link you take comes from the CNN Indonesia page")
 st.sidebar.caption("Created by Ungga Putra using [Streamlit](https://streamlit.io/)🎈.")
 
+MODEL_NAME = "facebook/bart-large-cnn"
+
 
 @st.cache_resource
-def load_summarizer():
-    return pipeline(
-        "summarization",
-        model="facebook/bart-large-cnn",
-        tokenizer="facebook/bart-large-cnn",
+def load_model():
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
+    return tokenizer, model
+
+
+def summarize_text(text: str) -> str:
+    tokenizer, model = load_model()
+    inputs = tokenizer(
+        text,
+        max_length=1024,
+        truncation=True,
+        return_tensors="pt",
     )
+    summary_ids = model.generate(
+        inputs["input_ids"],
+        max_length=200,
+        min_length=50,
+        length_penalty=2.0,
+        num_beams=4,
+        early_stopping=True,
+    )
+    return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 
 def scrap_and_summarize(link: str):
@@ -67,19 +86,10 @@ def scrap_and_summarize(link: str):
         st.info("Article text is too short to summarize effectively.")
         return
 
-    summarizer = load_summarizer()
-    summary = summarizer(
-        news_input,
-        max_length=200,
-        min_length=50,
-        length_penalty=2.0,
-        num_beams=4,
-        truncation=True,
-        do_sample=False,
-    )
+    summary_text = summarize_text(news_input)
 
     st.header("News Summary:")
-    st.write(summary[0]["summary_text"])
+    st.write(summary_text)
 
 
 st.title("Scrape and Summarize CNN News with Streamlit")
